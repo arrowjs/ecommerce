@@ -1,0 +1,24 @@
+{% block content %}
+<div class="widget archieve">
+    <h3>{{ widget.data.title|title }}</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <ul class="blog_archieve">
+                {% for item in items %}
+                    <li>
+                        <a href="/archives/{{ item.datex|replace('-99','')|replace('-','/') }}/">
+                            <i class="fa fa-angle-double-right"></i>
+                            {{ item.date|date('F Y') }}
+                            {% if widget.data.show_post_count == '1' %}
+                                <span class="pull-right">({{ item.count }})</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,156 @@
+{% if recommended %}
+<div class="recommended_items"><!--recommended_items-->
+  <h2 class="title text-center">Nổi bật</h2>
+
+  <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+    {% for product in recommended %}
+      {% if loop.first or loop.index0 %3 == 0 %}
+      <div class="item{% if loop.first %} active{% endif %}"><!-- item display first -->
+      {% endif %}
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center" id="{{ product.id }}">
+                <div style="height: 120px">
+                  <img class="recom_tag_img" id="{{ product.id }}" src="{{ product.images | getImage(0) }}" alt="" />
+                </div>
+                {% if product.price_sale==0 %}
+                          <h2>{{ product.price | price(' đ') }}</h2>
+                        {% else %}
+                          {#<span style="text-decoration:line-through;background-color: #ebe8f0">{{ product.price }} Đ</span>#}
+                          <h2>{{ product.price_sale | price(' đ') }}</h2>
+                        {% endif %}
+                <p>{{ product.title|title_length(25,'...',false) }}</p>
+                <a href="javascript:add_cart({{ product.id }})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% if loop.index %3 == 0 or loop.last%}
+      </div>
+      {% endif %}
+    {% endfor %}
+    {% if recommended.length > 3 %}
+      <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev"> <i class="fa fa-angle-left"></i></a>
+      <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+    {% endif %}
+    </div>
+  </div>
+</div>
+{% endif %}
+
+
+
+
+
+<div class="recommended_items"><!--recommended_items-->
+  <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="item"><!-- item display first -->
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center" id="8">
+                <img class="recom_tag_img" id="8" src="/img/products/75144_22_04_15_air2 gold.jpg" alt="">
+                <h2>13.250.000 đ</h2>
+                <p>iPad Air 2 Wifi + 4G ...</p>
+                <a href="javascript:add_cart(8)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center">
+                <img class="recom_tag_img" id="10" src="/img/products/ipadmini1.jpeg" alt="">
+                <h2>5.000.000 đ</h2>
+                <p>iPad Mini 2 Xám ...</p>
+                <a href="javascript:add_cart(10)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center">
+                <img class="recom_tag_img" id="3" src="/img/products/72373_21_04_15_6 silver.jpg" alt="">
+                <h2>19.685.000 đ</h2>
+                <p>iPhone 6 Plus 64GB ...</p>
+                <a href="javascript:add_cart(3)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item"><!-- item display first -->
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center" id="6">
+                <img class="recom_tag_img" id="6" src="/img/products/46887_26_04_15_Macbook Pro Retina 2015 out.jpg" alt="">
+                <h2>30.300.000 đ</h2>
+                <p>MacBook Pro 13-inch ...</p>
+                <a href="javascript:add_cart(6)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center">
+                <img class="recom_tag_img" id="2" src="/img/products/46313_21_04_15_6 grey.jpg" alt="">
+                <h2>19.685.000 đ</h2>
+                <p>iPhone 6 Plus 64GB Space ...</p>
+                <a href="javascript:add_cart(2)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center">
+                <img class="recom_tag_img" id="9" src="/img/products/ipadxam.jpg" alt="">
+                <h2>11.850.000 đ</h2>
+                <p>iPad Air 2 Wifi + 4G ...</p>
+                <a href="javascript:add_cart(9)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="item"><!-- item display first -->
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center" id="4">
+                <img class="recom_tag_img" id="4" src="/img/products/87781_13_05_15_Gold.jpg" alt="">
+                <h2>32.240.000 đ</h2>
+                <p>The new Macbook 12 ...</p>
+                <a href="javascript:add_cart(4)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="product-image-wrapper">
+            <div class="single-products">
+              <div class="productinfo text-center">
+                <img class="recom_tag_img" id="1" src="/img/products/5197_21_04_15_iPhone 6 gold.jpg" alt="">
+                <h2>14.750.000 đ</h2>
+                <p>iPhone 6 16GB Gold - ...</p>
+                <a href="javascript:add_cart(1)" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a class="recommended-item-control active" href="#recommended-item-carousel" data-slide="prev"> <i class="fa fa-angle-left"></i></a>
+      <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div><!--/recommended_items-->
+</div>

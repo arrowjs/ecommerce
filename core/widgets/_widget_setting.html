@@ -1,0 +1,52 @@
+<form method="post">
+    <input type="hidden" name="widget" value="{{ widget_type }}">
+    <input type="hidden" name="id" value="{{ widget.id }}">
+
+    <div class="row">
+        {% block title %}
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="title">{{ 'all_table_column_title' | trans }}</label>
+                    <input type="text" class="form-control" name="title" id="title" value="{{ widget.data.title }}">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="cls">{{ 'class' | trans }}</label>
+                    <input type="text" class="form-control" name="cls" id="cls" value="{{ widget.data.cls }}">
+                </div>
+            </div>
+        {% endblock %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    {% block footer %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="file">{{ 'layout' | trans}}</label>
+                    <select class="form-control" name="file" id="file">
+                        {% for file in files %}
+                            {% if file == widget.data.file %}
+                                <option selected value="{{ file }}">{{ file }}</option>
+                            {% else %}
+                                <option value="{{ file }}">{{ file }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" onclick="return saveWidget(this)">{{ 'save' | trans}}</button>
+                    <button class="btn btn-danger" onclick="return removeWidget(this);">{{ 'remove' | trans}}</button>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+</form>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta property="fb:app_id" content="290963984430053" />
+    <meta property="og:site_name" content="Apple market"/>
+    <meta property="og:image" content="http://shop.arrowjs.io/img/logo-facebook.png" />
+    <meta property="og:image:width" content="600" />
+    <meta property="og:image:height" content="315" />
+    <meta property="og:description" content="Trang web bán hàng - Sản phẩm của học viên khóa 1 lớp Node.js Techmaster" />
+    <meta property="og:title" content="Đồ apple giá tốt nhất Việt Nam" />
+    <meta property="og:url" content="http://shop.arrowjs.io" />
+    <meta property="og:locale" content="vi_VN" />
+    <title>Apple store</title>
+    <link href="/theme_resources/frontend/Eshopper/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme_resources/frontend/Eshopper/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/theme_resources/frontend/Eshopper/css/prettyPhoto.css" rel="stylesheet">
+    <link href="/theme_resources/frontend/Eshopper/css/price-range.css" rel="stylesheet">
+    <link href="/theme_resources/frontend/Eshopper/css/animate.css" rel="stylesheet">
+    <link href="/theme_resources/frontend/Eshopper/css/main.css" rel="stylesheet">
+    <link href="/theme_resources/frontend/Eshopper/css/responsive.css" rel="stylesheet">
+    {% block cssExtends %}
+        <!-- include more css file here -->
+    {% endblock %}
+
+    {#<link rel="shortcut icon" href="/theme_resources/frontend/eshopper/images/ico/favicon.ico">#}
+
+    {{ 'before_close_head_tag'|fire_event('here is close head tag')|safe }}
+</head><!--/head-->
+
+<body>
+<!-- include js content here -->
+<script src="/theme_resources/frontend/Eshopper/js/jquery.js"></script>
+{#<script src="/theme_resources/frontend/eshopper/js/jquery-1.11.0.min.js"></script>#}
+<script src="/theme_resources/frontend/Eshopper/js/bootstrap.min.js"></script>
+<script src="/theme_resources/frontend/Eshopper/js/jquery.scrollUp.min.js"></script>
+<script src="/theme_resources/frontend/Eshopper/js/price-range.js"></script>
+<script src="/theme_resources/frontend/Eshopper/js/jquery.prettyPhoto.js"></script>
+<script src="/theme_resources/frontend/Eshopper/js/main.js"></script>
+<!--[if lt IE 9]>
+<script src="/theme_resources/frontend/eshopper/js/html5shiv.js"></script>
+<script src="/theme_resources/frontend/eshopper/js/respond.min.js"></script>
+<![endif]-->
+{{ 'after_open_body_tag'|fire_event(null)|safe }}
+
+{% include 'eshopper/header.html' %}
+{% block content %}
+    {#can using widgets slider here #}
+    {% include '_widgets/slider/slider.html' %}
+
+    {% block content_with_slider %}
+        <!-- include content -->
+    {% endblock %}
+    <!-- include footer here -->
+{% endblock %}
+
+{% include 'eshopper/footer.html' %}
+
+{% block jsExtends %}
+{#import javascript#}
+{% endblock %}
+<script>
+    function add_cart(id){
+        $.ajax({
+            method : 'get',
+            url : '/cart/'+id
+        }).done(function(result){
+            if (result == 'exists'){
+                alert('Sản phẩm này đã có trong giỏ hàng !');
+            }else{
+                alert('Đã cho vào giỏ hàng !');
+                $('#cart_quantity').text('( '+result.length+' )');
+            }
+        });
+    }
+    //add event to handler click to view product detail
+    $(document).ready(function() {
+        $(".productinfo div img" ).on( "click", function () {
+            window.location.href = '/product/detail/'+this.id;
+        });
+        $('.overlay-content img').on("click", function () {
+            window.location.href = '/product/detail/'+this.id;
+        });
+        $('.overlay-content p').on("click", function () {
+            window.location.href = '/product/detail/'+this.id;
+        });
+    });
+</script>
+</body>
+</html>

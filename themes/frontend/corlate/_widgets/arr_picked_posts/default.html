@@ -1,0 +1,41 @@
+<!-- begin sidebar 1-->
+<h2>{{ widget.data.title|title }}</h2>
+<div class="tab-wrap">
+    <div class="media">
+        <div class="parrent pull-left">
+            <ul class="nav nav-tabs nav-stacked">
+                {% if items|length %}
+                    {% for item in items %}
+                        <li class="{% if loop.index == 2 %}active{% endif %}">
+                            <a href="#tab{{ loop.index }}" data-toggle="tab" class="analistic-01">{{ item.title | title_length(25,'...') }}</a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="parrent media-body">
+            <div class="tab-content">
+                {% if items|length %}
+                    {% for item in items %}
+                    <div class="tab-pane {% if loop.index == 2 %}active{% endif %}" id="tab{{ loop.index }}">
+                        <div class="media" onclick="window.location.href = '/posts/{{ item.id }}/{{ item.alias }}'">
+                            {% if item.image %}
+                            <div class="pull-left" >
+                                <img class="img-responsive" style="height: 100px;width: 100px;padding: 0px" src="{{ item.image }}">
+                            </div>
+                            {% endif %}
+                            <div class="media-body">
+                                <p>{{ item.intro_text | title_length(350,'...') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <!--/.tab-content-->
+        </div>
+        <!--/.media-body-->
+    </div>
+    <!--/.media-->
+</div>
+<!-- end sidebar1 -->

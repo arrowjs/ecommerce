@@ -1,0 +1,63 @@
+{
+  "name": "Eshopper",
+  "alias": "eshopper",
+  "folder": "Eshopper",
+  "author": "shapebootstrap",
+  "link": "https://shapebootstrap.net/item/1524993-eshopper-best-free-ecommerce-html-template/",
+  "thumbnail": "thumbnail.png",
+  "sidebars": [
+    {
+      "name": "main-menu",
+      "title": "Main Menu"
+    },
+    {
+      "name": "left-sidebar-blog",
+      "title": "Left Sidebar of blog"
+    },
+    {
+      "name": "adv_sidebar_top",
+      "title": "Quảng cáo"
+    },
+    {
+      "name": "slider",
+      "title": "slider"
+    },
+    {
+      "name": "left-sidebar",
+      "title": "Left Sidebar of products"
+    }
+  ],
+  "menus": [
+    {
+      "name": "main_menu",
+      "title": "Main menu"
+    },
+    {
+      "name": "left_menu",
+      "title": "Left menu"
+    }
+  ],
+  "layouts": [
+    {
+      "name": "name",
+      "title": "title",
+      "description": "description",
+      "file": "file",
+      "thumbnail": "thumbnail"
+    }
+  ],
+  "events": [
+    {
+      "name": "before_close_head_tag",
+      "description": "Occur before </head> tag"
+    },
+    {
+      "name": "after_open_body_tag",
+      "description": "Occur after <body> tag"
+    },
+    {
+      "name": "before_close_body_tag",
+      "description": "Occur before </body> tag"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{% if items | length %}
+<div class="brands_products"><!--categories_products-->
+    <h2>{{ widget.data.title|title }}</h2>
+    <div class="brands-name">
+        <ul class="nav nav-pills nav-stacked">
+            {% for item in items %}
+            <li><a href="/products/{{ item.id }}"> <span class="pull-right">({{ item.count }})</span>{{ item.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endif %}

@@ -1,0 +1,46 @@
+{% extends "_widget_setting.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="number_of_posts">{{ 'm_widgets_label_number_of_posts' | trans }}</label>
+                <input type="text" class="form-control" name="number_of_posts" id="number_of_posts" value="{{ widget.data.number_of_posts }}"/>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="color_scheme">{{ 'm_widgets_label_color_scheme' | trans }}</label>
+                <select name="color_scheme" id="color_scheme" class="form-control">
+                    <option value="light" {% if widget.data.color_scheme == 'light' %}selected="selected"{% endif %}>
+                        {{ 'm_widgets_label_color_scheme_light' | trans }}
+                    </option>
+                    <option value="dark" {% if widget.data.color_scheme == 'dark' %}selected="selected"{% endif %}>
+                        {{ 'm_widgets_label_color_scheme_dark' | trans }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="order_by">{{ 'm_widgets_label_order_by' | trans }}</label>
+                <select name="order_by" id="order_by" class="form-control">
+                    <option value="social" {% if widget.data.order_by == 'social' %}selected="selected"{% endif %}>
+                        {{ 'm_widgets_label_order_by_social' | trans }}
+                    </option>
+                    <option value="reverse_time" {% if widget.data.order_by == 'reverse_time' %}selected="selected"{% endif %}>
+                        {{ 'm_widgets_label_order_by_reverse_time' | trans }}
+                    </option>
+                    <option value="time" {% if widget.data.order_by == 'time' %}selected="selected"{% endif %}>
+                        {{ 'm_widgets_label_order_by_time' | trans }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+{% endblock %}

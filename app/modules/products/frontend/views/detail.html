@@ -1,0 +1,167 @@
+{#{% extends 'default_layout.html' %}#}
+{#{% block cssExtends %}#}
+	{#<style>#}
+		{#img.similar-image {#}
+			{#max-width: 82px !important;#}
+			{#max-height: 82px !important;#}
+			{#cursor: pointer;#}
+		{#}#}
+		{#img#imageToShow {#}
+			{#max-height: 100%;#}
+		{#}#}
+	{#</style>#}
+{#{% endblock %}#}
+
+{#{% block content %}#}
+	{#<section>#}
+		{#<div class="container">#}
+			{#<div class="row">#}
+				{#<div class="col-sm-3">#}
+					{#<div class="left-sidebar">#}
+						{#dsadasdasd&#123;&#35;{{ "left-sidebar"|get_sidebar(route)|safe }}&#35;&#125;#}
+					{#</div>#}
+				{#</div>#}
+				{##}
+				{#<div class="col-sm-9 padding-right">#}
+					{#<div class="product-details"><!--product-details-->#}
+						{#<div class="col-sm-5">#}
+							{#<div class="view-product">#}
+								{#{% if images.length %}#}
+									{#{% for image in images %}#}
+										{#{% if loop.first %}#}
+											{#<img id="imageToShow" src="{{ image }}" alt="" />#}
+										{#{% endif %}#}
+									{#{% endfor %}#}
+								{#{% else %}#}
+									{#<img src="/img/noImage.png" alt="" />#}
+								{#{% endif %}#}
+								{#&#123;&#35;<h3>ZOOM</h3>&#35;&#125;#}
+							{#</div>#}
+							{#<div id="similar-product" class="carousel slide" data-ride="carousel">#}
+								{#<!-- Wrapper for slides -->#}
+								{#{% if images.length %}#}
+									{#{% set flag = 1 %}#}
+								    {#<div class="carousel-inner">#}
+											{#{% for image in images %}#}
+												{#{% if (loop.index0 % 3 == 0) or (loop.index0 == 0) %}#}
+													{#<div class="item{% if loop.index0==0 %} active{% endif %}">#}
+														{#<img class="similar-image" src="{{ image }}" alt="">#}
+														{#<!--check end of image -->#}
+														{#{% if loop.last %}#}
+													{#</div>#}
+														{#{% endif %}#}
+														{#<!--check end of image -->#}
+												{#{% else %}#}
+													{#{% if flag == 3 or loop.last %}#}
+															{#<img class="similar-image" src="{{ image }}" alt="">#}
+														{#</div>#}
+															{#{% set flag = 1 %}#}
+													{#{% else %}#}
+														{#<img class="similar-image" src="{{ image }}" alt="">#}
+															{#<!--check end of image -->#}
+															{#{% if loop.last %}#}
+																{#</div>#}
+															{#{% endif %}#}
+														{#<!--check end of image -->#}
+													{#{% endif %}#}
+												{#{% endif %}#}
+												{#{% set flag = flag+1 %}#}
+											{#{% endfor %}#}
+									{#</div>#}
+									{#{% if images.length > 3 %}#}
+									  {#<!-- Controls -->#}
+									  {#<a class="left item-control" href="#similar-product" data-slide="prev">#}
+										{#<i class="fa fa-angle-left"></i>#}
+									  {#</a>#}
+									  {#<a class="right item-control" href="#similar-product" data-slide="next">#}
+										{#<i class="fa fa-angle-right"></i>#}
+									  {#</a>#}
+									{#{% endif %}#}
+								{#{% endif %}#}
+								{#<!-- Wrapper for slides -->#}
+							{#</div>#}
+						{#</div>#}
+						{#<div class="col-sm-7">#}
+							{#<div class="product-information"><!--/product-information-->#}
+								{#&#123;&#35;<img src="/theme_resources/frontend/eshopper/images/product-details/new.jpg" class="newarrival" alt="" />&#35;&#125;#}
+								{#<h2>{{ item.title }}</h2>#}
+								{#<p>Product ID: {{ item.id }}</p>#}
+								{#&#123;&#35;<img src="/theme_resources/frontend/eshopper/images/product-details/rating.png" alt="" />&#35;&#125;#}
+								{#<span>#}
+									{#{% if item.price_sale == 0 %}#}
+										{#<span>{{ item.price | price(' đ')}}</span>#}
+									{#{% else %}#}
+										{#<span class="old-price">{{ item.price | price(' đ') }}</span>#}
+										{#<span>{{ item.price_sale | price(' đ') }}</span>#}
+									{#{% endif %}#}
+									{#&#123;&#35;<label>Số lượng : </label>&#35;&#125;#}
+									{#&#123;&#35;<input type="text" value="3" />&#35;&#125;#}
+									{#<button type="button" onclick="add_cart({{ item.id }})" class="btn btn-fefault cart">#}
+										{#<i class="fa fa-shopping-cart"></i>#}
+										{#Cho vào giỏ hàng#}
+									{#</button>#}
+								{#</span>#}
+								{#<p><b>Trạng thái :</b> {% if item.quantity <= 0 %}<span style="color:#880000"/> Hết hàng</span>{% else %}<span style="color: #0000cc">Còn hàng</span>{% endif %}</p>#}
+								{#<p><b>Tình trạng :</b> {% if item.status == 0 %}Mới{% else %}Cũ{% endif %}</p>#}
+								{#<p><b>Thương hiệu :</b> {{ categories[0].name }}</p>#}
+								{#<p><b>Ghi chú :</b> {{ item.desc }}</p>#}
+								{#&#123;&#35;<a href=""><img src="/theme_resources/frontend/eshopper/images/product-details/share.png" class="share img-responsive"  alt="" /></a>&#35;&#125;#}
+							{#</div><!--/product-information-->#}
+						{#</div>#}
+					{#</div><!--/product-details-->#}
+					{##}
+					{#<div class="category-tab shop-details-tab"><!--category-tab-->#}
+						{#<div class="col-sm-12">#}
+							{#<ul class="nav nav-tabs">#}
+								{#<li class="active"><a href="#details" data-toggle="tab">Chi tiết</a></li>#}
+								{#<li><a href="#reviews" data-toggle="tab">Phản hồi</a></li>#}
+							{#</ul>#}
+						{#</div>#}
+						{#<div class="tab-content">#}
+							{#<div class="tab-pane fade active in" id="details" >#}
+								{#<div class="col-sm-12">#}
+									{#<p>{{ item.content }}</p>#}
+								{#</div>#}
+							{#</div>#}
+							{#<div class="tab-pane fade" id="reviews" >#}
+								{#<div class="col-sm-12">#}
+									{#<ul>#}
+										{#&#123;&#35;<li><a href=""><i class="fa fa-user"></i>EUGEN</a></li>&#35;&#125;#}
+										{#<li><a href=""><i class="fa fa-clock-o"></i>12:41 PM</a></li>#}
+										{#<li><a href=""><i class="fa fa-calendar-o"></i>31 DEC 2014</a></li>#}
+									{#</ul>#}
+									{#&#123;&#35;<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>&#35;&#125;#}
+									{#<p><b>Viết dánh giá sản phẩm</b></p>#}
+									{#<form action="#">#}
+										{#<span>#}
+											{#<input type="text" placeholder="Your Name"/>#}
+											{#<input type="email" placeholder="Email Address"/>#}
+										{#</span>#}
+										{#<textarea name="" ></textarea>#}
+										{#&#123;&#35;<b>Rating: </b> <img src="/theme_resources/frontend/eshopper/images/product-details/rating.png" alt="" />&#35;&#125;#}
+										{#<button type="button" class="btn btn-default pull-right">#}
+											{#Submit#}
+										{#</button>#}
+									{#</form>#}
+								{#</div>#}
+							{#</div>#}
+							{##}
+						{#</div>#}
+					{#</div><!--/category-tab-->#}
+					{#&#123;&#35;{% include 'eshopper/_widgets/recommended/recommend.html' %}&#35;&#125;#}
+				{#</div>#}
+			{#</div>#}
+		{#</div>#}
+	{#</section>#}
+{#{% endblock %}#}
+{#{% block jsExtends %}#}
+	{#<script src="/theme_resources/frontend/Eshopper/js/jquery-1.11.0.min.js"></script>#}
+	{#<script>#}
+		{#$(document).ready(function() {#}
+			{#$('.similar-image').on('click', function (event) {#}
+				{#//console.log(event.target.src);#}
+				{#$('#imageToShow').attr('src',event.target.src);#}
+			{#})#}
+		{#})#}
+	{#</script>#}
+{#{% endblock %}#}

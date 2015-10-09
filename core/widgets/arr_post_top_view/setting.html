@@ -1,0 +1,33 @@
+{% extends "_widget_setting.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="number_to_show">{{ 'm_widgets_label_number_of_posts' | trans }}</label>
+                <input type="text" class="form-control" name="number_to_show" id="number_to_show"
+                       value="{{ widget.data.number_to_show }}">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="display_date">{{ 'm_widgets_label_layout_display_date' | trans }}</label>
+                <input type="checkbox" value="1" {% if widget.data.display_date == '1' %}checked="checked" {% endif %}
+                       name="display_date" id="display_date">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label for="display_index">{{ 'm_widgets_label_layout_icon_display_index' | trans }}</label>
+                <input type="checkbox" value="1" {% if widget.data.display_index == '1' %}checked="checked" {% endif %}
+                       name="display_index" id="display_index">
+            </div>
+        </div>
+    </div>
+{% endblock %}

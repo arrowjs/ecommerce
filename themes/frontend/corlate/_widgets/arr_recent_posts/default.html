@@ -1,0 +1,37 @@
+<h2>{{ widget.data.title }}</h2>
+<div class="accordion">
+    <div class="panel-group" id="accordion1">
+        {% for item in items %}
+            <div class="panel panel-default">
+                <div class="panel-heading{% if loop.first %} active{% endif %}">
+                    <h3 class="panel-title">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion1"
+                           href="#collapse{{ loop.index }}">
+                            {{ item.title|title_length(45,'...') }}
+                            <i class="fa fa-angle-right pull-right"></i>
+                        </a>
+                    </h3>
+                </div>
+
+                <div id="collapse{{ loop.index }}" class="panel-collapse collapse{% if loop.first %} in{% endif %}"
+                     onclick="window.location.href = '/posts/{{ item.id }}/{{ item.alias }}'">
+                    <div class="panel-body">
+                        <div class="media accordion-inner">
+                            {% if item.image %}
+                                <div class="pull-left">
+                                    <img class="img-responsive" style="height: auto;width: 150px;padding-right: 5px"
+                                         src="{{ item.image }}">
+                                </div>
+                            {% endif %}
+                            <div class="media-body">
+                                <p>{{ item.intro_text | title_length(200,'...') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+

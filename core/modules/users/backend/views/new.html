@@ -1,0 +1,188 @@
+{% extends 'layout.html' %}
+
+{% block cssExtends %}
+    <link rel="stylesheet" href="/theme_resources/backend/default/plugins/cropit/jquery.avatar.css" type="text/css"/>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <form id="edit-form" method="post">
+
+                {% include "toolbar.html" %}
+
+                <div class="box box-solid box-primary">
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{ 'all_table_column_username' | trans }} <span
+                                                class="required">*</span></label>
+                                    <input type="text" class="form-control" name="user_login"
+                                           value="{{ user.user_login }}" required="required"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'all_table_column_fullname' | trans }}<span
+                                                class="required">*</span></label>
+                                    <input type="text" class="form-control" name="display_name"
+                                           value="{{ user.display_name }}" required="required"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'all_table_column_email' | trans }}<span class="required">*</span></label>
+                                    <input type="email" class="form-control" name="user_email"
+                                           value="{{ user.user_email }}" required="required"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'all_table_column_phone' | trans }}<span class="required">*</span></label>
+                                    <input type="text" class="form-control" name="phone"
+                                           value="{{ user.phone }}" required="required"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>{{ 'all_table_column_url' | trans }}</label>
+                                    <input type="text" class="form-control" name="user_url"
+                                           value="{{ user.user_url }}"/>
+                                </div>
+                                {% if roles %}
+                                    <div class="form-group">
+                                        <label>{{ 'all_table_column_role' | trans }} <span
+                                                    class="required">*</span></label>
+                                        <select class="table-group-action-input form-control input-medium"
+                                                name="role_id" required="required">
+                                            {% for role in roles %}
+                                                {% set selected = "" %}
+                                                {% if role.id == user.role_id %}
+                                                    {% set selected = "selected" %}
+                                                {% endif %}
+                                                <option value="{{ role.id }}" {{ selected }}>{{ role.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{{ 'all_table_column_status' | trans }}<span
+                                                    class="required">*</span></label>
+                                        <select class="table-group-action-input form-control input-medium"
+                                                name="user_status" value="{{ user.user_status }}" required>
+                                            {% if user.user_status == 'publish' %}
+                                                <option value="publish"
+                                                        selected>{{ 'all_table_column_activation' | trans }}</option>
+                                                <option value="un-publish">{{ 'all_table_column_deactivation' | trans }}</option>
+                                            {% else %}
+                                                <option value="publish">{{ 'all_table_column_activation' | trans }}</option>
+                                                <option value="un-publish"
+                                                        selected>{{ 'all_table_column_deactivation' | trans }}</option>
+                                            {% endif %}
+                                        </select>
+                                    </div>
+                                    {% if user %}
+                                        <a class="btn btn-sm btn-danger" data-toggle="modal" href="#confirm">
+                                            <i class="fa fa-remove"></i> {{ 'delete' | trans }}
+                                        </a>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+
+                            <div class="col-md-6">
+                                {% if not user %}
+                                    <div class="form-group">
+                                        <label>{{ 'all_table_column_password' | trans }} <span class="required">*</span></label>
+                                        <input type="password" class="form-control" id="user_pass" name="user_pass"
+                                               required="required"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>{{ 'm_users_backend_views_new_pass_confirm' | trans }}<span
+                                                    class="required">*</span></label>
+                                        <input type="password" class="form-control" id="confirm_pass"
+                                               required="required"/>
+                                    </div>
+                                {% endif %}
+
+                                <div class="form-group">
+                                    <label>{{ 'm_users_backend_views_new_avatar' | trans }} <span class="help-block"
+                                                                                                  style="display: inline;">(128x128px) </span></label>
+                                    <a href="#" id="avt" class="btn btn-primary btn-block"><i class="fa fa-upload"></i>
+                                        {{ 'm_users_backend_views_new_choose_image' | trans }}</a>
+
+                                    <img style="margin: 15px 0" class="img img-thumbnail" id="user_image"
+                                         src="{{ user.user_image_url }}"/>
+                                    <input type="hidden" name="user_image_url" value="{{ user.user_image_url }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirm" tabindex="-1" role="basic" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">{{ 'm_users_backend_views_new_delete_header' | trans }}</h4>
+                </div>
+                <div class="modal-body">
+                    {{ 'm_users_backend_views_new_delete_confirm_alert' | trans }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ 'cancel' | trans }}</button>
+                    <button type="button" class="btn btn-danger"
+                            onclick="return deleteUser();">{{ 'delete' | trans }}</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/theme_resources/backend/default/plugins/cropit/jquery.cropit.min.js" type="text/javascript"></script>
+    <script src="/theme_resources/backend/default/plugins/cropit/jquery.avatar_cropit.js" type="text/javascript"></script>
+    <script>
+        $(document).ready(function () {
+            $.callAvatarModal($('#avt'), {
+                root: '/avatar-gallery/',
+                input_elem: 'input[name=user_image_url]',
+                preview_elem: '#user_image',
+                form: '#edit-form'
+            });
+        });
+
+        var password = document.getElementById("user_pass")
+                , confirm_password = document.getElementById("confirm_pass");
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("{{ 'm_users_backend_views_new_password_not_match' | trans }}");
+            } else {
+                confirm_password.setCustomValidity('');
+            }
+        }
+        if (password != null) {
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validatePassword;
+        }
+
+        {% if user %}
+        function deleteUser() {
+            $.ajax({
+                url: '/admin/users',
+                type: 'DELETE',
+                data: {
+                    ids: {{ user.id }}
+                }
+            }).done(function (result) {
+                window.location.href = "/admin/users/";
+            });
+        }
+        {% endif %}
+
+    </script>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'default_layout.html' %}
+{% block content %}
+	{{ "adv_sidebar_top"|get_sidebar(route)|safe }}
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3">
+					<div class="left-sidebar">
+						{{ "left-sidebar-blog"|get_sidebar(route)|safe }}
+					</div>
+				</div>
+				<div class="col-sm-9">
+					<div class="blog-post-area">
+						<h2 class="title text-center">
+							{% if category %}
+								{{ category.name|title }}
+							{% else %}
+								Bài viết
+							{% endif %}
+						</h2>
+					{% if posts|length %}
+						{% for item in posts %}
+							<div class="single-blog-post">
+								<h3><a href="/posts/{{ item.id }}/{{item.alias}}">{{ item.title }}</a></h3>
+								<div class="post-meta">
+									<ul>
+										<li><i class="fa fa-user"></i>{{ item.user.display_name }}</li>
+										{#<li><i class="fa fa-clock-o"></i> 1:33 pm</li>#}
+										<li><i class="fa fa-calendar"></i>{{ item.published_at|date('j M Y') }}</li>
+									</ul>
+								</div>
+								{% if item.image %}
+								<a href="/posts/{{ item.id }}/{{item.alias}}">
+									<img width="100%" src="{{ item.image }}" alt="">
+								</a>
+								{% endif %}
+								<p>{{ item.intro_text|safe }}</p>
+								<a  class="btn btn-primary" href="/posts/{{ item.id }}/{{item.alias}}/">Chi tiết</a>
+							</div>
+
+						{% endfor %}
+					{% endif %}
+					</div>
+					<br>
+					{%if baseURL %}
+						{%set basePageURL = baseURL+'{page}'%}
+					{%else%}
+						{% set basePageURL = '/category/' +   category.alias + '/' + category.id + '/page-{page}/' %}
+					{%endif%}
+					{{ totalPage|pagination_front(currentPage, basePageURL)|safe }}
+				</div>
+
+			</div>
+		</div>
+	</section>
+{% endblock %}
+
+{% block jsExtend %}
+{% endblock %}

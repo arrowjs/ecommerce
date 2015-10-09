@@ -1,0 +1,17 @@
+site_name: ARROW CMS PROJECT
+pages:
+
+- [index.md, Trang chủ, ArrowCMS]
+- [tutorial.md, Làm quen với ArrowCMS,Khởi đầu ]
+- [tutorial/structure.md,Làm quen với ArrowCMS, Cấu trúc ArrowCMS]
+- [tutorial/module.md,Làm quen với ArrowCMS, Module ArrowCMS]
+- [tutorial/config.md,Làm quen với ArrowCMS, Cấu hình ArrowCMS]
+- [tutorial/theme.md,Làm quen với ArrowCMS, Theme ArrowCMS]
+- [tutorial/widget.md,Làm quen với ArrowCMS, Widget ArrowCMS]
+- [api.md, Tùy biến ,Hỗ trợ cho third-party]
+- [api/create_filter.md, Tùy biến, Custom filter]
+- [api/create_theme.md, Tùy biến, Custom theme]
+- [api/basic_table.md, Tùy biến, Module data table]
+
+
+theme: readthedocs
