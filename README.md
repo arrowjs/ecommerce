@@ -1,7 +1,8 @@
-ArrowJS CMS
+Ecommerce website base on ArrowJS CMS
 ==================
 
-Welcome to ArrowJS CMS! ArrowJS CMS is CMS base on ArrowJS framework, it helps you build your web application easier.
+Welcome to ArrowJS CMS ! 
+ArrowJS CMS is CMS base on ArrowJS framework, it helps you build your web application easier.
 
 Please write us if you have any feedback.
 
