@@ -1,10 +1,9 @@
 {
-  "name": "Eshopper",
-  "alias": "eshopper",
-  "folder": "Eshopper",
-  "author": "shapebootstrap",
-  "link": "https://shapebootstrap.net/item/1524993-eshopper-best-free-ecommerce-html-template/",
-  "thumbnail": "thumbnail.png",
+  "information": {
+    "theme_name": "Eshopper",
+    "theme_uri": "https://shapebootstrap.net/item/1524993-eshopper-best-free-ecommerce-html-template/",
+    "author": "shapebootstrap"
+  },
   "sidebars": [
     {
       "name": "main-menu",

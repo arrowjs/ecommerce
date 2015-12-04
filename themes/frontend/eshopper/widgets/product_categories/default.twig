@@ -1,0 +1,22 @@
+{% if categories | length %}
+    <div class="brands_products"><!--categories_products-->
+        <h2>{{ widget.title | safe }}</h2>
+
+        <div class="brands-name">
+            <ul class="nav nav-pills nav-stacked">
+                {% for category in categories %}
+                    <li>
+                        <a href="/products/{{ category.id }}">
+                            {{ category.name }}
+                            {% if category.count <= 0 %}
+                                <span class="pull-right">(0)</span>
+                            {% else %}
+                                <span class="pull-right">({{ category.count }})</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endif %}

@@ -1,0 +1,70 @@
+{% extends '_layout.' + getConfig('viewExtension') %}
+
+{% block content %}
+    {#{{ get_sidebar("adv_sidebar_top") | async | safe }}#}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        {{ getSidebar("left-sidebar") | async | safe }}
+                    </div>
+                </div>
+
+                <div class="col-sm-9 padding-right">
+                    {% if products %}
+                        <div class="features_items"><!--features_items-->
+                            <h2 class="title text-center">{% if category %}{{ category.name }}{% else %}Tất cả sản phẩm{% endif %}</h2>
+
+                            {% for product in products %}
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <img class="product_img" src="{{ product.images | getImage(0) }}"
+                                                     alt=""/>
+                                                <h2>{% if product.price_sale==0 %}
+                                                        <h2>{{ product.price | vnd(' đ') }}</h2>
+                                                    {% else %}
+                                                        <h2>{{ product.price_sale | vnd(' đ') }}</h2>
+                                                    {% endif %}</h2>
+                                                <p>{{ product.title | title(30,'...') | safe }}</p>
+                                                <a href="javascript:add_cart({{ product.id }})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                            </div>
+                                            <div class="product-overlay" >
+                                                <div class="overlay-content">
+                                                    <h2>{% if product.price_sale==0 %}
+                                                            <h2>{{ product.price | vnd(' đ') }}</h2>
+                                                        {% else %}
+                                                            <h2>{{ product.price_sale | vnd(' đ') }}</h2>
+                                                        {% endif %}</h2>
+                                                    <p id="{{ product.id }}">{{ product.desc | title(300,'...') | safe }}</p>
+                                                    <a href="javascript:add_cart({{ product.id }})" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
+                                                </div>
+                                            </div>
+                                            {% if product.price_sale !=0 %}
+                                                <img src="/frontend/Eshopper/assets/images/home/sale.png" class="new" alt="">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div><!--features_items-->
+
+                        {% if category.id %}
+                            {{ paginateLinks(totalPage, currentPage,"/products/"+ category.id +"/page/{page}") | safe }}
+                        {% else %}
+                            {% if route %}
+                                {{ paginateLinks(totalPage, currentPage,route+"/{page}") | safe }}
+                            {% else %}
+                                {{ paginateLinks(totalPage, currentPage, "/products/page/{page}") | safe }}
+                            {% endif %}
+
+                        {% endif %}
+                    {% endif %}
+                    {% include 'recommended.twig' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

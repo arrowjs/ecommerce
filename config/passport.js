@@ -1,45 +1,59 @@
 'use strict';
 
-/**
- * Module dependencies.
- */
-let path = require('path'),
-    redis = require('redis').createClient();
-/**
- * Module init function.
- */
-module.exports = function (passport) {
-    // Serialize sessions
-    passport.serializeUser(function (user, done) {
-        done(null, user.id);
-    });
+let logger = require('arrowjs').logger;
 
-    // Deserialize sessions
-    passport.deserializeUser(function (id, done) {
-        let key = __config.redis_prefix + 'current-user-' + id;
-        redis.get(key, function (err, result) {
-            if (result != null) {
-                let user = JSON.parse(result);
+module.exports = function (passport, application) {
+    return {
+        serializeUser: function (user, done) {
+            done(null, user.id);
+        },
+        deserializeUser: function (id, done) {
+            application.models.user.findById(id).then(function (user) {
                 done(null, user);
-            }
-            else {
-                __models.user.find({
-                    include: [__models.role],
+            }).catch(function (err) {
+                done(err)
+            });
+        },
+        checkAuthenticate: function (req, res, next) {
+            if (req.isAuthenticated()) {
+                application.models.user.find({
                     where: {
-                        id: id
-                    }
+                        id: req.user.id
+                    },
+                    include: application.models.role
                 }).then(function (user) {
-                    let user_tmp = JSON.parse(JSON.stringify(user));
-                    user_tmp.key = key;
-                    user_tmp.acl = JSON.parse(user_tmp.role.rules);
-                    redis.setex(key, 300, JSON.stringify(user_tmp));
-                    done(null, user_tmp);
-                }).catch(function (error) {
-                    console.log(error.stack);
+                    try {
+                        req.session.permissions = JSON.parse(user.role.permissions);
+                    } catch (err) {
+                        req.session.permissions = null;
+                    }
+                    res.locals.user = user;
+                    return next();
+                }).catch(function (err) {
+                    logger.error('Error at : checkAuthenticate :', err);
+                    res.redirect('/admin/login');
                 });
+            } else {
+                res.redirect('/admin/login');
+            }
+        },
+        handlePermission: function (req, res, next) {
+            if (req.hasPermission) {
+                res.locals.user = req.user;
+                return next()
+            } else {
+                req.flash.error("You do not have permission to access");
+                res.redirect('/admin/403');
+            }
+        },
+        local_login: {
+            strategy: 'local',
+            option: {
+                successRedirect: '/admin',
+                failureRedirect: '/admin/login',
+                failureFlash: true
 
             }
-        });
-
-    });
+        }
+    }
 };

@@ -1,0 +1,266 @@
+{% extends '_layout.twig' %}
+
+{% block cssExtends %}
+    <style>
+        .tab-pane img {
+            max-width: 100%;
+            height: auto;
+        }
+        .tab-pane {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <form id="edit-form" method="post"/>
+            {{ toolbar | safe }}
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="row">
+
+                        <div class="col-md-9 col-sm-9">
+                            <div class="form-group">
+                                <label for="title">Tiêu đề sản phẩm<span class="required">*</span></label>
+                                <input type="text" class="form-control" name="title" id="title"
+                                       value="{{ product.title }}" autocomplete="off" required="required"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="content">Nội dung sản phẩm</label>
+                                    <textarea name="content" id="content" required="required"
+                                              class="form-control">{{ product.content }}</textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="desc">Chú thích cho sản phẩm</label>
+                                    <textarea name="desc" id="desc" class="form-control"
+                                              rows="5">{{ product.desc }}</textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 col-sm-3">
+                            <div class="form-group">
+                                <label for="published">Số lượng</label>
+                                <input type="number" class="form-control" name="quantity" id="quantity"
+                                       value="{% if product.quantity %}{{ product.quantity }}{% else %}0{% endif %}" autocomplete="off" />
+                            </div>
+                            <div class="form-group">
+                                <label for="id_category">Danh mục</label>
+                                <select multiple="multiple" name="id_category" id="id_category"
+                                        class="form-control">
+                                    {% for cat in categories %}
+                                        <option value="{{ cat.id }}">{{ cat.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="status">Tình trạng</label>
+                                <select data-tags="true" name="status" id="status" class="form-control">
+                                    <option value="0" {% if product.status == 0 %}selected="selected"{% endif %}>
+                                        Mới
+                                    </option>
+                                    <option value="1" {% if product.status == 1 %}selected="selected"{% endif %}>
+                                        Cũ
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="price">Giá sản phẩm</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" class="form-control" name="price" id="price" value="{% if product.price %}{{ product.price }}{% else %}0{% endif %}" autocomplete="off" />
+                                    <span class="input-group-addon">.VND</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="price_sale">Giá khuyến mại</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">$</span>
+                                    <input type="number" class="form-control" name="price_sale" id="price_sale" value="{% if product.price_sale %}{{ product.price_sale }}{% else %}0{% endif %}" autocomplete="off" />
+                                    <span class="input-group-addon">.VND</span>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="images" name="images">
+                        <input type="hidden" id="categories" name="categories">
+                        <input type="hidden" id="alias" name="alias">
+                        </form>
+                    </div>
+                    <div class="row">
+                        <form id="images-upload" action="/admin/products/upload-image" method="post">
+                            <div class="col-md-9 col-sm-9">
+                                <div class="form-group">
+                                    <div class="form-group" id="images-upload">
+                                        <label for="price_sale">Hình ảnh của sản phẩm</label>
+                                        <input class="form-control" type="file" id="image" accept="image/*" name="image" onchange="uploadImage()"/><br>
+
+                                        <div class="nav-tabs-custom" id="nav-tabs-image">
+                                            <ul class="nav nav-tabs" id="nav-tabs-img">
+                                                <!--Tab contain-->
+                                                <li id="delete_icon" class="pull-right"><a onclick="deleteImg();return false;" href="#"  class="text-muted"><i class="glyphicon glyphicon-trash"></i></a></li>
+                                            </ul>
+                                            <div class="tab-content" id="tab-content-img">
+                                                <!--images contain-->
+                                            </div><!-- /.tab-content -->
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsExtends %}
+    {% include '_editorScript.twig' %}
+    {#categories proccess#}
+    <script src="/backend/adminLTE/assets/plugins/select2/select2.min.js"></script>
+    {#using for form submit ajax#}
+    <script src="/frontend/Eshopper/assets/js/jquery.form.js"></script>
+
+    <script>
+        var imagesList=[];
+        var imageCount=1;
+        var currentImg={};
+        function uploadImage(){
+            $('#images-upload').submit();
+        }
+        $(document).ready(function() {
+            CKEDITOR.replace('desc', {
+                height: 200
+            });
+            CKEDITOR.replace('content', {
+                height: 400
+            });
+            //for edit form
+            {% if images %}
+            {% for image in images %}
+            imagesList.push({id : imageCount,url : '{{ image }}'});
+            addImage('{{ image }}',imageCount++);
+            {% endfor %}
+            imageArea();
+            {% endif %}
+            ///end edit form
+            $( "#nav-tabs-img li.tag a" ).on( "click", function (event) {
+                var id_temp = (event.target.id).split('_').pop();
+                console.log('Click Event : '+id_temp);
+                currentImg = {id : id_temp , url : $('#tab_'+id_temp+' img').attr('src')};
+
+            } );
+            $('#images-upload').submit(function() {
+                $(this).ajaxSubmit({
+                    error: function(xhr) {
+                        status('Error: ' + xhr.status);
+                    },
+                    success: function(response) {
+                        if(response.error) {
+                            status('Opps, something bad happened');
+                            return;
+                        }
+                        imagesList.push({id : imageCount,url : response});
+                        currentImg = {id : imageCount,url : response};
+                        addImage(response,imageCount);
+                        imageArea();
+                        imageCount++;
+                    }
+                });
+                return false;
+            });
+            {% if product.categories %}
+            var cat_id = '{{ product.categories }}';
+            cat_id = cat_id.split(':');
+            cat_id.shift();
+            cat_id.pop(cat_id[cat_id.length - 1]);
+            select2.val(cat_id).trigger('change');
+            {% endif %}
+            $("#edit-form").submit(function () {
+                var form = $('#edit-form');
+                var list_id = $('#id_category').val();
+                if (list_id && list_id != '') {
+                    list_id = ':' + list_id.join(':') + ':';
+                    $("#categories").val(list_id);
+                }
+                //add value for images column
+                var imagesTemp = [];
+                //alert(JSON.stringify(imagesList));
+                for (var i = 0; i < imagesList.length ; i++){
+                    imagesTemp.push(imagesList[i].url);
+                    console.log('Each loop : '+imagesList[i].url);
+                };
+                $('#images').val(imagesTemp.join(':::'));
+            });
+        });
+
+
+        /* BEGIN init select2 */
+        var select2 = $('#id_category');
+        select2.select2({
+            placeholder: "Chọn danh mục",
+            templateSelection: function(option){
+                var text = $(option.element).text().trim();
+                text = text.replace(/^[—]+/, '');
+                return text;
+            }
+        });
+
+        function addImage(url,id,index){
+            if (index==null || index == 0){
+                index = id;
+            }
+            var imgHtmlTab = ' <li id="imgTag_'+index+'" class="tag"><a id="img_'+index+'" href="#tab_'+index+'" data-toggle="tab" aria-expanded="false">#'+index+'</a></li>';
+            var imgHtmlContent = '<div class="tab-pane" id="tab_'+index+'"><img src="'+url+'"/></div>';
+            $('#nav-tabs-img').append(imgHtmlTab);
+            $('#tab-content-img').append(imgHtmlContent);
+            $('#img_'+index).click();
+            currentImg = {id:index,url:url};
+        }
+        function imageArea(){
+            if (imagesList.length > 0){
+                $('#nav-tabs-image').show();
+            }else{
+                $('#nav-tabs-image').hide();
+            }
+            var index = 1 ;
+            $.each($('#nav-tabs-img li.tag a'), function (key,value) {
+                value.text = '#'+index;
+                index++;
+            })
+        }
+        function deleteImg(){
+            $.ajax({
+                url : "/admin/products/delete-image",
+                method : 'DELETE',
+                data : currentImg
+            }).done(function(result) {
+                $('#imgTag_' +result.id).remove();
+                $('#tab_'+result.id).remove();
+                console.log(imagesList.length);
+                for (var i = 0; i < imagesList.length ; i++){
+                    if (result.id == imagesList[i].id){
+                        if(imagesList.length > 0){
+                            if(imagesList[i+1] != null){
+                                $('#img_'+imagesList[i+1].id).click();
+                            }
+                            else if (imagesList[i-1] != null){
+                                $('#img_'+imagesList[i-1].id).click();
+                            }
+                        }else{
+                            currentImg = {};
+                        }
+                        imagesList.splice(i,1);
+                    };
+                }
+                imageArea();
+            });
+        }
+    </script>
+{% endblock %}

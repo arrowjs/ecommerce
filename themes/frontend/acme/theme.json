@@ -1,0 +1,23 @@
+{
+  "information": {
+    "theme_name": "ACME",
+    "theme_uri": "https://shapebootstrap.net/item/1524925-acme-free-responsive-corporate-template",
+    "author": "COSMIC",
+    "author_email": "promy90@gmail.com",
+    "version": "1.0",
+    "description": "Free Responsive Corporate Template",
+    "license": "GNU General Public License v2 or later",
+    "license_uri": "http://www.gnu.org/licenses/gpl-2.0.html",
+    "tag": "bootstrap, corporate, html, responsive, acme"
+  },
+  "sidebars": [
+    {
+      "name": "right-sidebar",
+      "title": "Right sidebar"
+    },
+    {
+      "name": "main-menu",
+      "title": "Main nenu"
+    }
+  ]
+}

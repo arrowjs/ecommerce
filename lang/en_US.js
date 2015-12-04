@@ -34,12 +34,21 @@ module.exports = {
     "choose": "Choose",
     "not_authenticated": "Not Authenticated",
 
+    /** Module category */
+    "m_category_backend_module_title": "Categories",
+    "m_category_backend_module_desc": "Category Manager",
+    "m_category_backend_module_category_index": "View All Categories",
+    "m_category_backend_module_category_create": "Create New Category",
+    "m_category_backend_module_category_edit": "Edit Category",
+    "m_category_backend_module_category_delete": "Delete Category",
+    "m_category_backend_views_category_create": "Create New",
+    "m_category_backend_category_render_title": "All categories",
+    "m_category_backend_category_filter_column_post": "Posts",
+    "m_category_backend_category_flash_delete_success": "Category deleted successfully",
+    "m_category_backend_category_update_success": "Category updated successfully",
+    "m_category_backend_category_flash_save_success": "Category created successfully",
+
     /** Module blog */
-    "m_blog_backend_category_render_title": "All categories",
-    "m_blog_backend_category_filter_column_post": "Posts",
-    "m_blog_backend_category_flash_delete_success": "Category deleted successfully",
-    "m_blog_backend_category_update_success": "Category updated successfully",
-    "m_blog_backend_category_flash_save_success": "Category created successfully",
     "m_blog_backend_page_filter_column_created_date": "Created Date",
     "m_blog_backend_page_render_title": "All Pages",
     "m_blog_backend_page_render_update": "Update Pages",
@@ -53,7 +62,6 @@ module.exports = {
     "m_blog_backend_post_render_create": "Create Post",
     "m_blog_backend_post_flash_create_success": "Post created successfully",
     "m_blog_backend_post_flash_delete_success": "Post deleted successfully",
-    "m_blog_backend_views_category_create": "Create New",
     "m_blog_backend_views_form_content": "Content",
     "m_blog_backend_views_form_short_desc": "Short Description",
     "m_blog_backend_views_form_image": "Feature Image",
@@ -67,10 +75,10 @@ module.exports = {
     "m_blog_backend_views_form_author_info": "Author's Information",
     "m_blog_backend_module_title": "Blog",
     "m_blog_backend_module_desc": "Blog Manager",
-    "m_blog_backend_module_category_index": "View All Categories",
-    "m_blog_backend_module_category_create": "Create New Category",
-    "m_blog_backend_module_category_edit": "Edit Category",
-    "m_blog_backend_module_category_delete": "Delete Category",
+    //"m_blog_backend_module_category_index": "View All Categories",
+    //"m_blog_backend_module_category_create": "Create New Category",
+    //"m_blog_backend_module_category_edit": "Edit Category",
+    //"m_blog_backend_module_category_delete": "Delete Category",
     "m_blog_backend_module_post_index": "View All Posts",
     "m_blog_backend_module_post_create": "Create New Post",
     "m_blog_backend_module_post_edit": "Edit Own Post",
@@ -145,7 +153,7 @@ module.exports = {
     "m_menus_backend_views_new_box_title": "Custom Link",
     "m_menus_backend_views_new_custom_link_title": "Title",
     "m_menus_backend_views_new_custom_link_url": "URL",
-    "m_menus_backend_views_new_btn_add_menu": "Add to Menu&nbsp; ",
+    "m_menus_backend_views_new_btn_add_menu": "Add to Menu ",
     "m_menus_backend_views_new_form_menu_name": "Menu Name",
     "m_menus_backend_views_new_form_menu_structure": "Menu Structure",
     "m_menus_backend_views_new_javascript_update_output": "JSON browser support is required",
@@ -235,7 +243,7 @@ module.exports = {
     "m_roles_backend_module_backend_menu_menus_create": "Create new role",
 
     /* modules upload */
-    "m_upload_backend_module_title": "uploads",
+    "m_upload_backend_module_title": "Uploads",
     "m_upload_backend_module_desc": "Upload file with roxyfileman",
     "m_upload_backend_controllers_index_delete_dir_error": "Cannot delete folder when file still exist !",
     "m_upload_backend_controllers_index_delete_error_integrated": "Not Integrated",
@@ -383,5 +391,7 @@ module.exports = {
     "all_table_column_active": "Active",
     "all_table_column_email": "Email",
     "all_table_column_phone": "Phone",
-    "all_table_column_role": "Role"
+    "all_table_column_role": "Role",
+    "all_table_column_role_placeholder": "Choose Roles",
+    "all_table_column_current_role": "Current Role"
 };

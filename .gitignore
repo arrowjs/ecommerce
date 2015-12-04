@@ -1,3 +1,8 @@
+node_modules/
+config/env/development.js
+log/
+.log
+.idea
+.bowerrc
 .DS_Store
-node_modules
-
+dump.rdb

@@ -1,0 +1,9 @@
+{
+  "name": "Admin LTE",
+  "version": "2.3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/almasaeed2010/AdminLTE.git"
+  },
+  "license": "MIT"
+}

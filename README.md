@@ -1,51 +1,111 @@
-Ecommerce website base on ArrowJS CMS
+ArrowJS CMS
 ==================
 
-Welcome to ArrowJS CMS !
+Join our online chat at [![Gitter](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/trquoccuong/arrowjs)
 
+> Welcome to ArrowJS CMS! ArrowJS CMS is CMS base on ArrowJS framework. By default, we are blog platform support SQL database like Wordpress. We have many features like themes, widget , multi-language, authenticate , Role-base v.v
+Our platform is easy to scale to build large system like e-commerce v.v.
 
-ArrowJS CMS is CMS base on ArrowJS framework, it helps you build your web application easier.
-
-Please write us if you have any feedback.
+Email us if you need any support to build your own business
 
 Thanks.
+
+## Demo Website
+
+[Demo Website](http://cms.arrowjs.io/) 
+
+Demo account backend
+```
+    username : demo
+    password: demo12
+```
+
+## Documents
+
+Vietnamese documents:
+[http://arrowjs.io](http://arrowjs.io)
+
+English documents will be coming soon.
 
 ## Requirements
 
 To run this CMS you need at least:
 
-- PostgreSQL 9.4 or higher ([http://www.postgresql.org/](http://www.postgresql.org/))
-- Redis server. ([http://redis.io/](http://redis.io/))
+- Nodejs 4.0.0 or higher
 
-However, you can use Nginx to serve static files.
 
-## Installation
+## Install ArrowCMS on fresh VPS
+
+```
+    $ bash <(curl -s http://arrowjs.io/install.sh)
+
+```
+
+This bashscript auto install Redis, Postgres for you.
+
+## Installation 
 
 Clone project from github:
 
 ```
-    git clone https://github.com/TechMaster/...
+    git clone https://github.com/arrowjs/CMS.git
 ```
 
-Then you'll need to create the database from backup file:
+Go to project folder and install npm packages
 
 ```
-    cd arrowjs-cms
-    pg_restore -U [username] -d [dbname] "sql/arrowjs.backup"
-    # [username]: user for database postgres
-    # [dbname]: database name to restore (default is arrowjs)
+    cd CMS
+    sudo npm install
+```
+## Configuration
+
+We tested with PostgreSQL and MySQL.
+By default, Arrow CMS use PostgreSQL and Redis. If you don't have Redis or PostgreSQL modify the config file :
+
+
+```
+//Database config
+//config/database.js
+ db: {
+        host: 'localhost',    // database host
+        port: '5432',         // database port
+        database: 'arrowjs',  // database name
+        username: 'postgres', // database usename
+        password: '',         // database password
+        dialect: 'postgres',  // database type 
+        logging: false
+    },
+    
+```
+
+
+```
+
+//Redis cache config
+//config/redis.js
+redis: {
+        host: 'localhost',
+        port: '6379',
+        type: 'fakeredis'  // if you installed redis, change it to "redis".
+    },
+    
 ```
 
 ## Run CMS
 
-Go to project folder and start application:
+Start application:
 
 ```
-    cd arrowjs-cms
     node server.js
 ```
 
-Now application start on port 3333 (default port, you can change it in file config).
+or
+
+```
+    npm start
+```
+
+Now application start on port 8000 (default port, you can change it in file config/config.js or configure in server.js).
 
 Admin account for backend (with URL /admin/login):
 

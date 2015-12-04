@@ -1,0 +1,102 @@
+body {
+    font-size: 16px;
+}
+
+.logo .icon_logo {
+    color: #c30;
+}
+
+.logo .text_logo {
+    color: #607D8B;
+}
+
+.feature-box {
+    margin-top: 0;
+}
+
+.feature-head h1 {
+    color: #444e67;
+    margin-bottom: 50px;
+}
+
+.feature-box .content p {
+    text-align: center;
+}
+
+.feature-box-heading img {
+    width: 100%;
+}
+
+.feature-box-heading i {
+    width: 100px;
+    height: 100px;
+    padding-top: 30px;
+    background: #cccccc;
+    color: #fff;
+    border: none;
+}
+
+.feature-box-heading i:hover {
+    background: #39CCCC;
+}
+
+.feature-box-heading h4 {
+    margin-top: 25px;
+}
+
+.social-link-footer li {
+    float: left;
+}
+
+ul.page-footer-list li {
+    border-bottom: none;
+}
+
+.copyright p {
+    margin-bottom: 17px;
+}
+
+.carousel .item {
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+    height: 500px;
+}
+
+.carousel .slider_1 {
+    background-image: url("/frontend/acme/assets/img/techmaster4.jpg");
+}
+
+.carousel .slider_2 {
+    background-image: url("/frontend/acme/assets/img/techmaster2.jpg");
+}
+
+.carousel .slider_3 {
+    background-image: url("/frontend/acme/assets/img/techmaster3.jpg");
+}
+
+.carousel-control {
+    background: transparent !important;
+}
+
+.carousel-indicators .active {
+    margin-right: 5px;
+}
+
+.head-section .navbar-nav > li > a {
+    font-size: 16px;
+}
+
+ul.page-footer-list {
+    padding: 0;
+}
+
+ul.page-footer-list a:hover {
+    color: #48cfad;
+}
+
+.recent_post img,
+.picked_post img {
+    width: 100px;
+}
+

@@ -1,0 +1,142 @@
+{% extends '_layout.' + getConfig('viewExtension') %}
+
+{% block content %}
+    {{ getSidebar("slider") | async | safe }}
+
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="left-sidebar">
+                        {{ getSidebar("left-sidebar") | async | safe }}
+                    </div>
+                </div>
+
+                <div class="col-sm-9 padding-right">
+
+                    {% if slider %}
+                        <div class="category-tab"><!--category-tab-->
+                            <div class="col-sm-12">
+                                <ul class="nav nav-tabs">
+                                    {% if news %}
+                                        <li class="active"><a href="#leatherman" data-toggle="tab">Sản phẩm mới</a>
+                                        </li>{% endif %}
+                                    {% if olds %}
+                                        <li><a href="#wenger" data-toggle="tab">Sản phẩm cũ</a></li>{% endif %}
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                {% if news %}
+                                    <div class="tab-pane fade active in" id="leatherman">
+                                        {% for product in news %}
+                                            <div class="col-sm-3">
+                                                <div class="product-image-wrapper">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <div style="height: 150px">
+                                                                <img class="cate_img_tag" id="{{ product.id }}"
+                                                                     src="{{ product.images | getImage(0) }}" alt=""/>
+                                                            </div>
+                                                            {% if product.price_sale==0 %}
+                                                                <h2>{{ product.price | vnd(' đ') }}</h2>
+                                                            {% else %}
+                                                                <h2>{{ product.price_sale | vnd(' đ') }}</h2>
+                                                            {% endif %}
+                                                            <p id="{{ product.id }}">{{ product.title | title(20,'...') | safe }}</p>
+                                                            <a href="javascript:add_cart({{ product.id }})"
+                                                               class="btn btn-default add-to-cart"><i
+                                                                        class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                {% if olds %}
+                                    <div class="tab-pane fade" id="wenger">
+                                        {% for product in olds %}
+                                            <div class="col-sm-3">
+                                                <div class="product-image-wrapper">
+                                                    <div class="single-products">
+                                                        <div class="productinfo text-center">
+                                                            <div style="height: 150px">
+                                                                <img id="{{ product.id }}" class="cate_img_tag"
+                                                                     src="{{ product.images | getImage(0) }}" alt=""/>
+                                                            </div>
+                                                            {% if product.price_sale==0 %}
+                                                                <h2>{{ product.price | vnd(' đ') }}</h2>
+                                                            {% else %}
+                                                                <h2>{{ product.price_sale | vnd(' đ') }}</h2>
+                                                            {% endif %}
+                                                            <p id="{{ product.id }}">{{ product.title | title(22,'...') | safe }}</p>
+                                                            <a href="javascript:add_cart({{ product.id }})"
+                                                               class="btn btn-default add-to-cart"><i
+                                                                        class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div><!--/category-tab-->
+                    {% endif %}
+
+
+                    {% if products %}
+                        <div class="features_items"><!--features_items-->
+
+                            <h2 class="title text-center">Sản phẩm</h2>
+
+                            {% for product in products %}
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center" id="{{ product.id }}">
+                                                <div style="height: 249px">
+                                                    <img class="feat_img_tag" src="{{ product.images | getImage(0) }}"
+                                                         id="{{ product.id }}"/>
+                                                </div>
+                                                {% if product.price_sale==0 %}
+                                                    <h2>{{ product.price | vnd(' đ') }}</h2>
+                                                {% else %}
+                                                    <h2>{{ product.price_sale | vnd(' đ') }}</h2>
+                                                {% endif %}
+                                                <p id="{{ product.id }}">{{ product.title | title(27,'...') | safe }}</p>
+                                                <a href="javascript:add_cart({{ product.id }})"
+                                                   class="btn btn-default add-to-cart"><i
+                                                            class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+                                            </div>
+                                            <div class="product-overlay">
+                                                <div class="overlay-content" id="{{ product.id }}">
+                                                    <h2>{% if product.price_sale==0 %}
+                                                            <h2>{{ product.price | vnd(' đ') }}</h2>
+                                                        {% else %}
+                                                            <h2>{{ product.price_sale | vnd(' đ') }}</h2>
+                                                        {% endif %}</h2>
+                                                    <p id="{{ product.id }}">{{ product.desc| safe | title(300,'...') | safe }}</p>
+                                                    <a href="javascript:add_cart({{ product.id }})"
+                                                       class="btn btn-default add-to-cart"><i
+                                                                class="fa fa-shopping-cart"></i>Cho vào giỏ hàng</a>
+                                                </div>
+                                            </div>
+                                            {% if product.price_sale !=0 %}
+                                                <img src="/frontend/Eshopper/assets/images/home/sale.png" class="new"
+                                                     alt="">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div><!--features_items-->
+                    {% endif %}
+                    <!-- using widgets  -->
+                    {% include 'recommended.twig' %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+

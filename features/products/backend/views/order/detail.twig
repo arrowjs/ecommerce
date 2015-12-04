@@ -1,0 +1,166 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="nav-tabs-custom">
+                <button type="button" onclick="$('#myModalOrder').modal('hide');" class="close" data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">×</span></button>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true"><h4>Thông tin khách
+                                hàng</h4></a></li>
+                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false"><h4>Chỉ tiết đơn hàng</h4></a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <form class="form-horizontal" method="post" id="orderDetail"
+                              action="/products/order/{{ order.id }}">
+                            <!-- text input -->
+                            <div class="form-group">
+                                <label for="order-name" class="col-xs-3 control-label">Người đặt</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" value="{{ order.name }}" class="form-control" id="order-name"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-email" class="col-xs-3 control-label">E-mail</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" value="{{ order.email }}" class="form-control" id="order-email"
+                                           disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-phone" class="col-xs-3 control-label">Số điện thoại</label>
+
+                                <div class="col-sm-9">
+                                    <input type="text" value="{{ order.phone }}" class="form-control" id="order-phone"
+                                           disabled>
+                                </div>
+                            </div>
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label for="order-name" class="col-xs-3 control-label">Nơi nhận hàng</label>
+
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" rows="1" disabled>{{ order.address }}</textarea>
+                                </div>
+                            </div>
+                            <!-- select -->
+                            <div class="form-group">
+                                <label for="order-status" class="col-xs-3 control-label">Trạng thái</label>
+
+                                <div class="col-sm-9">
+                                    <select id="order-status" name="status" class="form-control">
+                                        <option value="0" {% if order.status == 0 %}selected{% endif %} >Chưa xác nhận
+                                        </option>
+                                        <option value="1" {% if order.status == 1 %}selected{% endif %}>Đang giao hàng
+                                        </option>
+                                        <option value="2" {% if order.status == 2 %}selected{% endif %}>Đã nhận hàng
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <input type="hidden" name="url" value="{{ url }}">
+                            <input type="hidden" name="id" value="{{ order.id }}">
+
+                            <div class="box-footer">
+                                <a href="javascript:closeOrderDetail()" id="btn_hidden_order" class="btn btn-default">Quay
+                                    Lại</a>
+                                <a href="javascript:$('#orderDetail').submit()" class="btn btn-info pull-right">Cập
+                                    nhật</a>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
+                    {% if order.products %}
+                        <div class="tab-pane" id="tab_2">
+                            <table class="table table-bordered">
+                                <tbody>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Thành tiền</th>
+                                </tr>
+                                {% set total = 0 %}
+                                {% for product in order.products.cart %}
+                                    <tr>
+                                        <td>{{ loop.index }}</td>
+                                        <td>{{ product.title }}</td>
+                                        <td>
+                                            {{ product.quantity }}
+                                        </td>
+                                        <td>
+                                            {{ product.total_price }}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td style="font-weight: bold;">
+                                        Tổng hóa đơn :<br>
+                                        VAT :<br>
+                                        Tổng hóa đơn + VAT :
+                                    </td>
+                                    <td>
+                                        {{ order.products.total }} <br>
+                                        {{ order.products.vat }}<br>
+                                        {{ order.products.total_vat }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endif %}
+                    <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+
+
+{% block jsExtends %}
+    <script>
+        $(document).ready(function () {
+            var tr = $('#tr-' + '{{ order.id }}' + ' td span.label');
+            $('#orderDetail').submit(function () {
+                $.ajax({
+                    url: '/admin/products/order/{{ order.id }}',
+                    method: 'post',
+                    data: $('#orderDetail').serialize(),
+                    success: function (result) {
+
+                        if ($('#tr-' + '{{ order.id }}' + ' td span.label').hasClass("label-danger")) {
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').removeClass("label-danger");
+                        } else if ($('#tr-' + '{{ order.id }}' + ' td span.label').hasClass("label-warning")) {
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').removeClass("label-warning");
+                        } else if ($('#tr-' + '{{ order.id }}' + ' td span.label').hasClass("label-primary")) {
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').removeClass("label-primary");
+                        }
+
+                        if ($('#order-status').val() == 0) {
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').text('Chưa xác nhận');
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').addClass("label-danger");
+                        } else if ($('#order-status').val() == 1) {
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').text('Đang giao hàng');
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').addClass("label-warning");
+                        } else if ($('#order-status').val() == 2) {
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').text('Đã nhận hàng');
+                            $('#tr-' + '{{ order.id }}' + ' td span.label').addClass("label-primary");
+                        }
+
+                        $('#myModalOrder .modal-dialog').remove();
+                        $('#myModalOrder').modal('hide');
+                    }
+                });
+                return false;
+            })
+        })
+    </script>
+{% endblock %}
