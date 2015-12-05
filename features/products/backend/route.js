@@ -153,6 +153,18 @@ module.exports = function (component, application) {
                 authenticate: true,
                 permissions: 'order'
             }
+        },
+        "/product_category/link/menu" : {
+            get : {
+                handler : comp.link_menu_products_category,
+                authenticate : true
+            }
+        },
+        "/products/link/menu" : {
+            get : {
+                handler : comp.link_menu_products,
+                authenticate : true
+            }
         }
     }
 };

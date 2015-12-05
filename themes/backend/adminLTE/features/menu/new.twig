@@ -388,9 +388,11 @@
                 btnLoadModule = button;
                 module_detail_view += getPagination(total_pages, page, route, search, useSearch);
 
-                module_detail_view += '</div><div class="form-group btn-add-menu-wrapper">' +
-                '<div class="checkbox" style="float: left;"><label><input type="checkbox" name="arr_link_item" value="'+ listLink +'">List all items</label></div>'+
-                '<button type="button" class="btn btn-primary btn-add-menu" ' +
+                module_detail_view += '</div><div class="form-group btn-add-menu-wrapper">' ;
+                if(listLink)
+                module_detail_view +='<div class="checkbox" style="float: left;"><label><input type="checkbox" name="arr_link_item" value="'+ listLink +'">List all items</label></div>';
+
+                module_detail_view +='<button type="button" class="btn btn-primary btn-add-menu" ' +
                 'onclick="return addNewMenu(this);">' +
                 '{{ __('m_menus_backend_views_new_btn_add_menu') }}&nbsp;<i class="fa fa-arrow-circle-right"></i></button></div>';
 

@@ -68,6 +68,21 @@ module.exports = {
                 link : '/order'
             }
         ]
+    },
+    //is define this module has link to shows on menu
+    add_link_menu : {
+        category_product : {
+            title : 'Product Category',
+            route : '/product_category/link/menu',
+            //list : '/products/{id}', // link to display all pages
+            search : true
+        },
+        products : {
+            title : 'Link Products',
+            route : '/products/link/menu',
+            list : '/products', // link to display all pages
+            search : true
+        }
     }
 };
 

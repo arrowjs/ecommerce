@@ -14,7 +14,7 @@ module.exports = {
     },
     date_format: 'DD-MM-YYYY',
     backendTheme: 'adminLTE',
-    frontendTheme: 'eshopper',
+    frontendTheme: 'Eshopper',
     functionFolder: '/library/view_utilities/functions',
     filterFolder: '/library/view_utilities/filters',
     variableFile: '/library/view_utilities/variables/global.js',
