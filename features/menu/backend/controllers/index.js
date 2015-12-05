@@ -86,7 +86,7 @@ module.exports = function (controller, component, app) {
                     menu_locations : menus
                 });
             }).catch(function (err) {
-                log(err);
+                log.error(err);
                 res.render('new', {
                     title: __('m_menus_backend_controller_create_render_title'),
                     setting_menu_feature : null,

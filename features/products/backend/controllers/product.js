@@ -468,7 +468,6 @@ module.exports = function (controller, component, application) {
             offset: (page - 1) * itemOfPage,
             raw: true
         }).then(function (results) {
-            console.log('dsadas : ',results);
             let totalRows = results.count;
             let items = results.rows;
             let totalPage = Math.ceil(results.count / itemOfPage);
