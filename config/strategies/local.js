@@ -24,6 +24,7 @@ module.exports = function (passport,config,app) {
                     return done(err);
                 }else if (!user) {
                     ArrowHelper.createUserAdmin(app, function (result) {
+
                         if(!result){
                             return done(null, false, {
                                 message: 'Invalid Username ! Please login again.'
@@ -42,6 +43,7 @@ module.exports = function (passport,config,app) {
                     return done(null, user);
                 }
             }).catch(function (err) {
+                console.log(err);
                 log.error(err);
                 return done(null, false,{
                     message : 'Database error ! Please login again.'
